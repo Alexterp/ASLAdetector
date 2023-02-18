@@ -41,35 +41,16 @@ with mp_hands.Hands(
       print(
           f'Index finger tip coordinates: (',
           f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x * image_width}, '
-          f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y * image_width}, '
+          f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y * image_height}, '
           f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].z })'
       )
       
-      #a = Hand(hand_landmarks.landmark)
-      # d = MessageToDict(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST])
-      # result = d.items()
-      # data = list(result)
-      # npArray = np.array(data[1][1])
-       
-      #print (hand_landmarks.landmark[0])
-      
-      
-      for region in mp_hands.HandLandmark:
-        d = MessageToDict(hand_landmarks.landmark[region])
-        result = d.items()
-        data = list(result)
+      current_ =  Hand(hand_landmarks)
+            
         
-        temp = []
-        
-        for cord in range(3):
-          temp.append(data[cord][1])
-        #print(temp)
-
-        cleaned_cords = np.append(cleaned_cords, [temp], axis=0)  
-        
-      print (len(cleaned_cords[0]))
+      print (current_.landmark_data)
       
-      print (type(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST]))
+      #print (type(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST]))
       mp_drawing.draw_landmarks(
           annotated_image,
           hand_landmarks,
