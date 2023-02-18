@@ -1,0 +1,5 @@
+*.jpg
+*.png
+launch.json
+*.mp4
+__pycache__
