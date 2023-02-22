@@ -3,7 +3,6 @@ import csv
 import mediapipe as mp
 from hand_model import Hand_Model
 from hand_class import Hand
-from google.protobuf.json_format import MessageToDict
 import numpy as np
 
 mp_drawing = mp.solutions.drawing_utils
@@ -11,7 +10,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 final_data = np.empty(shape=[0,21,3])
 
-IMAGE_FILES = ['.\detector\what.jpg','.\\detector\\no_hand.jpg','.\detector\wht2.jpg']
+IMAGE_FILES = ['.\\training\\test_images\\hand_1.jpg','.\\training\\test_images\\no_hand.jpg','.\\training\\test_images\\hand_2.jpg']
 
 with mp_hands.Hands(
     static_image_mode=True,
@@ -60,10 +59,10 @@ with mp_hands.Hands(
   
       
     cv2.imwrite(
-        'annotated_image' + str(idx) + '.png', cv2.flip(annotated_image, 1))
+        '.\\training\\annotated_test_images\\annotated_image' + str(idx) + '.png', cv2.flip(annotated_image, 1))
   
 
-  with open("result.csv", mode='w+') as csv_file: #saving line per frame in csv
+  with open(".\\training\\result.csv", mode='w+') as csv_file: #saving line per frame in csv
     
     for index, per_image_result in enumerate(final_data):
       per_image_result=per_image_result.reshape(1,63)
