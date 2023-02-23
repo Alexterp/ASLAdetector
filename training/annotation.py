@@ -120,12 +120,12 @@ class Annotate:
             self.classWindow.update_idletasks()
 
     def label_savior(self):
-        ready_labels = []
-        file = open(self.path_label,"a+")
-        for label in self.labels:
-            ready_labels.append(label + "\n")
-        file.writelines(ready_labels)
-        file.close()
+        # ready_labels = []
+        # file = open(self.path_label,"a+")
+        # for label in self.labels:
+        #     ready_labels.append(label + "\n")
+        # file.writelines(ready_labels)
+        # file.close()
         self.nextFrame()
 
     def click_listener(self,click):
@@ -167,7 +167,7 @@ class Annotate:
 
     def image_update(self):
         
-        st = self._path+'\\annotated_image0.png'
+        st = self._path+'\\annotated_test_images\\annotated_image0.png'
         self.photo = ImageTk.PhotoImage(Image.open(st))
         self.img_holder.configure(image=self.photo)
         self.img_holder.image=self.photo
@@ -233,13 +233,15 @@ class Annotate:
         return self.letters
         
     def finalize(self):
-        csv_path = ".\\training\\results.csv"
-        with open(csv_path, mode='a') as csv_file:
+        csv_path = ".\\training\\letter_labels.csv"
+        with open(csv_path, mode='w',newline='') as csv_file:
             
             csv_writer = csv.writer(
             csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for segment_data in self.segment_times_data:
-                csv_writer.writerow([segment_data[0],segment_data[1],segment_data[2]])
+                for index in range(segment_data[1],segment_data[2]+1):
+                    csv_writer.writerow([segment_data[0]])
+                    
         self.final_output.set("THE RESULTS ARE SAVED AT results.csv YOU CAN CLOSE THE TOOL NOW")
         self.classWindow.update_idletasks()
 
