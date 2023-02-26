@@ -120,12 +120,13 @@ class Annotate:
             self.classWindow.update_idletasks()
 
     def label_savior(self):
-        # ready_labels = []
-        # file = open(self.path_label,"a+")
-        # for label in self.labels:
-        #     ready_labels.append(label + "\n")
-        # file.writelines(ready_labels)
-        # file.close()
+        ready_labels = []
+        if not len(ready_labels)==0: #if not empty
+            file = open(self.path_label,"a+")
+            for label in self.labels:
+                ready_labels.append(label + "\n")
+            file.writelines(ready_labels)
+            file.close()
         self.nextFrame()
 
     def click_listener(self,click):
