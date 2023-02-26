@@ -4,13 +4,22 @@ import mediapipe as mp
 from hand_model import Hand_Model
 from hand_class import Hand
 import numpy as np
+import os
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 final_data = np.empty(shape=[0,21,3])
+_image_set_path = ".\\training\\test_images"
 
-IMAGE_FILES = ['.\\training\\test_images\\hand_1.jpg','.\\training\\test_images\\no_hand.jpg','.\\training\\test_images\\hand_2.jpg']
+IMAGE_FILES = []
+
+for content in os.listdir(_image_set_path):     #get image names
+  if content.endswith(".jpg"):
+    IMAGE_FILES.append(".\\training\\test_images\\"+content)
+
+print(IMAGE_FILES)
+
 
 with mp_hands.Hands(
     static_image_mode=True,
