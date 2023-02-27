@@ -5,21 +5,25 @@ from hand_model import Hand_Model
 from hand_class import Hand
 import numpy as np
 import os
+from natsort import natsorted,ns,os_sorted
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 final_data = np.empty(shape=[0,21,3])
-_image_set_path = ".\\training\\test_images"
+_image_set_path = ".\\image_set\\"
 
 IMAGE_FILES = []
 
-for content in os.listdir(_image_set_path):     #get image names
+for content in os_sorted(os.listdir(_image_set_path)):     #get image names
   if content.endswith(".jpg"):
-    IMAGE_FILES.append(".\\training\\test_images\\"+content)
+    IMAGE_FILES.append(".\\image_set\\"+content)
+
+#natsorted(IMAGE_FILES, alg=ns.IGNORECASE)
 
 print(IMAGE_FILES)
 
+#IMAGE_FILES = ['.\\training\\test_images\\hand_1.jpg','.\\training\\test_images\\no_hand.jpg','.\\training\\test_images\\hand_2.jpg']
 
 with mp_hands.Hands(
     static_image_mode=True,
@@ -36,9 +40,9 @@ with mp_hands.Hands(
     
     
     if not results.multi_hand_landmarks: #handle no hand case
-      current_data = np.empty(shape=[21,3])
-      current_data[:] = np.nan
-      #continue
+      # current_data = np.empty(shape=[21,3])
+      # current_data[:] = np.nan
+      continue
     
     else: 
       for hand_landmarks in results.multi_hand_landmarks:
@@ -53,23 +57,20 @@ with mp_hands.Hands(
       
       image_height, image_width, _ = image.shape
       annotated_image = image.copy()
-      
-    final_data = np.append(final_data,[current_data], axis =0)
-      
-    print(final_data)      
-
-    mp_drawing.draw_landmarks(
+      mp_drawing.draw_landmarks(
         annotated_image,
         hand_landmarks,
         mp_hands.HAND_CONNECTIONS,
         mp_drawing_styles.get_default_hand_landmarks_style(),
         mp_drawing_styles.get_default_hand_connections_style())
-    
-  
       
-    cv2.imwrite(
-        '.\\training\\annotated_test_images\\annotated_image' + str(idx) + '.png', cv2.flip(annotated_image, 1))
-  
+      cv2.imwrite(
+        '.\\image_set\\annotated_image_set\\annotated_image' + str(idx) + '.png', cv2.flip(annotated_image, 1))
+      
+    final_data = np.append(final_data,[current_data], axis =0)
+      
+    print(final_data)      
+
 
   with open(".\\training\\result.csv", mode='w+') as csv_file: #saving line per frame in csv
     
