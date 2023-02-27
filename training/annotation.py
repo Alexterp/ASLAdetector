@@ -168,7 +168,7 @@ class Annotate:
 
     def image_update(self):
         
-        st = self._path+'\\annotated_test_images\\annotated_image0.png'
+        st = self._path+"\\dataset\\iset_0\\frame_"+str(self.counter)+'.png'
         self.photo = ImageTk.PhotoImage(Image.open(st))
         self.img_holder.configure(image=self.photo)
         self.img_holder.image=self.photo
