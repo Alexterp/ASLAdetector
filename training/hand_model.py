@@ -1,15 +1,15 @@
 from enum import Enum
 
 class Hand_Model (Enum):
-    wrist = 0
-    thumb_cmc = 1
-    thumb_mcp = 2
-    thumb_ip = 3
+    wrist = 0  #0,1,2
+    thumb_cmc = 1  # 3,4,5
+    thumb_mcp = 2  # 6,7,8
+    thumb_ip = 3   
     thumb_tip = 4
-    index_finger_mcp = 5
+    index_finger_mcp = 5 #
     index_finger_pip = 6
     index_finger_dip = 7
-    index_finger_tip = 8 
+    index_finger_tip = 8 #24,25,26
     middle_finger_mcp = 9
     middle_finger_pip = 10
     middle_finger_dip = 11
