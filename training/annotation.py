@@ -59,6 +59,7 @@ class Annotate:
         self.prev = tk.Button(self.but_frame,text="Previous Frame",command=lambda p="backward":self.click_listener(p))
         self.start = tk.Button(self.but_frame,text="Start segment",command=lambda s="start":self.click_listener(s))
         self.end = tk.Button(self.but_frame,text="End segment",command=lambda e="end":self.click_listener(e))
+        self.gotoend = tk.Button(self.but_frame,text="goto end",command=lambda gtn="goto":self.click_listener(gtn))
         self.remove = tk.Button(self.but_frame,text="Remove last segment",bg="#ff6633",command=lambda r="remove":self.click_listener(r))
 
 
@@ -141,6 +142,9 @@ class Annotate:
                 self.counter -= 1
             else:
                 self.at_the_begining = True
+        if click == "goto":
+            self.counter =240
+        
         if click == "start":
             self.segment_times_data.append([-1, self.counter, 0])
             self.bl_seg.set("You started a segment")
@@ -168,7 +172,7 @@ class Annotate:
 
     def image_update(self):
         
-        st = self._path+"\\dataset\\iset_0\\frame_"+str(self.counter)+'.png'
+        st = self._path+"\\dataset\\a\\frame_"+str(self.counter)+'.png'
         self.photo = ImageTk.PhotoImage(Image.open(st))
         self.img_holder.configure(image=self.photo)
         self.img_holder.image=self.photo
@@ -190,6 +194,7 @@ class Annotate:
         self.prev.place (x=20,y=20)
         self.start.place (x=20,y=65)
         self.end.place (x=220,y=65)
+        self.gotoend.place (x=320,y=65)
         self.remove.place(x=100,y=105)
         self.finale.place(x=800,y=125)
         self.nav_label.place(x=0,y=400)
@@ -234,7 +239,7 @@ class Annotate:
         return self.letters
         
     def finalize(self):
-        csv_path = ".\\training\\letter_labels.csv"
+        csv_path = ".\\training\\a_letter_labels.csv"
         with open(csv_path, mode='w',newline='') as csv_file:
             
             csv_writer = csv.writer(
