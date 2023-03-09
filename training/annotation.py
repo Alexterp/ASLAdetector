@@ -10,6 +10,8 @@ class Annotate:
         self.classWindow = tk.Tk()
         self.classWindow.title('ASLAd_annotation_tool')
         
+        self.current_letter ='d'
+        self.total_num = 253
         
         self.counter = -1
         self.images = []
@@ -143,7 +145,7 @@ class Annotate:
             else:
                 self.at_the_begining = True
         if click == "goto":
-            self.counter =240
+            self.counter = self.total_num
         
         if click == "start":
             self.segment_times_data.append([-1, self.counter, 0])
@@ -172,7 +174,7 @@ class Annotate:
 
     def image_update(self):
         
-        st = self._path+"\\dataset\\a\\frame_"+str(self.counter)+'.png'
+        st = self._path+"\\dataset\\"+self.current_letter+"\\frame_"+str(self.counter)+'.png'
         self.photo = ImageTk.PhotoImage(Image.open(st))
         self.img_holder.configure(image=self.photo)
         self.img_holder.image=self.photo
@@ -239,7 +241,7 @@ class Annotate:
         return self.letters
         
     def finalize(self):
-        csv_path = ".\\training\\a_letter_labels.csv"
+        csv_path = ".\\training\\unprepared_data\\"+self.current_letter+"_letter_labels.csv"
         with open(csv_path, mode='w',newline='') as csv_file:
             
             csv_writer = csv.writer(

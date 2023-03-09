@@ -2,20 +2,22 @@ import numpy as np
 from pandas import read_csv
 import csv
 
+letter = "d"
 
 class Prepare:
     
     def __init__(self) -> None:
         self.load_md_data()
+    
         # self.mediapipe_data
         # self.label_data
         
     
     def load_md_data(self):        
         #--- Getting mediapipe data
-        self.mediapipe_data = np.loadtxt(".\\training\\unprepared_data\\mediapipe_result.csv", delimiter=",")    
+        self.mediapipe_data = np.loadtxt(".\\training\\unprepared_data\\"+letter+".csv", delimiter=",")    
         #--- Getting letter labels 
-        self.label_data = np.loadtxt(".\\training\\unprepared_data\\letter_labels.csv", delimiter=",")
+        self.label_data = np.loadtxt(".\\training\\unprepared_data\\"+letter+"_letter_labels.csv", delimiter=",")
         
         
         assert  len(self.label_data) ==  len(self.mediapipe_data)    
@@ -25,7 +27,7 @@ class Prepare:
     
     
     def combine_data(self,md_data,lbl_data):
-        self.combined_data = np.empty(shape=[0,64],dtype= object) # 63 md data + 1 label id
+        self.combined_data = np.empty(shape=[0,43],dtype= object) # 63 md data + 1 label id
         
         for frame in range(len(md_data)):
             temp = np.empty(64,dtype=object)
@@ -40,10 +42,10 @@ class Prepare:
             
     def save_dataset(self,combined_data):
         
-        with open(".\\training\\final_dataset.csv", mode='w+') as csv_file: #saving line per frame in csv
+        with open(".\\training\\"+letter+"_final_dataset.csv", mode='w+') as csv_file: #saving line per frame in csv
     
             for index, per_image_result in enumerate(combined_data):
-                per_image_result=per_image_result.reshape(1,64)
+                per_image_result=per_image_result.reshape(1,43)
                 np.savetxt(csv_file, per_image_result,delimiter=',')
         
         
