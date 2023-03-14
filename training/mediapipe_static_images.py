@@ -11,7 +11,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 
-letter = "e"
+letter = "z"
 
 final_data = np.empty(shape=[0,42])
 _image_set_path = ".\\image_set\\" + letter+"\\"
@@ -68,9 +68,10 @@ with mp_hands.Hands(
         mp_drawing_styles.get_default_hand_landmarks_style(),
         mp_drawing_styles.get_default_hand_connections_style())
       
-      cv2.imwrite(
-        '.\\image_set\\annotated_image_set\\annotated_image' + str(idx) + '.png', cv2.flip(annotated_image, 1))
       
+      if not cv2.imwrite(
+        ".\\training\\dataset\\"+letter+"\\annotated_image_" + str(idx) + ".png", cv2.flip(annotated_image, 1)):
+        raise Exception("Could not write images")
     final_data = np.append(final_data,[current_data[0]], axis =0)
       
     print(final_data)      
@@ -81,6 +82,8 @@ with mp_hands.Hands(
     for index, per_image_result in enumerate(final_data):
       per_image_result=per_image_result.reshape(1,42)
       np.savetxt(csv_file, per_image_result,delimiter=',')
+      
+
     
 
   
