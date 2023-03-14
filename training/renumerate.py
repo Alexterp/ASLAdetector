@@ -2,7 +2,11 @@ import os
 from natsort import os_sorted
 
 IMAGE_FILES = []
-path = "C:\\Users\\Alex\\Desktop\\Πτυχιακή\\ASLAdetector\\image_set\\annotated_image_set\\"
+letter = "z"
+
+path = "C:\\Users\\Alex\\Desktop\\Πτυχιακή\\ASLAdetector\\training\\dataset\\"+letter+"\\"
+
+print("file exists?", os.path.exists(path))
 
 os.chdir(path)
 
