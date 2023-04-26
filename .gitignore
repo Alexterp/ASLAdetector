@@ -5,3 +5,5 @@ launch.json
 __pycache__
 *.csv
 DONE.txt
+.idea
+*.h5

@@ -5,7 +5,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(1)
 with mp_hands.Hands(
     model_complexity=0,
     min_detection_confidence=0.5,
@@ -29,6 +29,9 @@ with mp_hands.Hands(
         image = cv.cvtColor(image, cv.COLOR_RGB2BGR)
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
+                image_height, image_width, _ = image.shape
+                print(f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x * image_width}, '
+                f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y * image_height}')
                 mp_drawing.draw_landmarks(
                     image,
                     hand_landmarks,
