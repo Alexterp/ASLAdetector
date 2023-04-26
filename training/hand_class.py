@@ -69,7 +69,7 @@ class Hand:
             return value/max_value
         trimmed_cords = list(map(_normalize,trimmed_cords))
         
-        print("normalized", trimmed_cords[0][24],trimmed_cords[0][25])
+       # print("normalized", trimmed_cords[0][24],trimmed_cords[0][25])
         
         return trimmed_cords
     
