@@ -1,5 +1,4 @@
 import numpy as np
-from hand_model import Hand_Model
 from google.protobuf.json_format import MessageToDict
 from mediapipe import solutions
 import math
@@ -41,7 +40,7 @@ class Hand:
         
         trimmed_cords = np.empty(shape=[0,2])
         
-        #get base cordinates. The rest of them will be associated with them
+        #get base coordinates.
         base_x, base_y = cords_array[0][0],cords_array[0][1] #wrist x,y 
         
         # replace x,y of every value with the distance from the base
@@ -52,25 +51,18 @@ class Hand:
             trimmed_cords = np.append(trimmed_cords,
                                       [[cords_array[landmark][0],cords_array[landmark][1]]],
                                       axis=0) 
-        
-        #print(trimmed_cords[8][0],trimmed_cords[8][1])
+    
         trimmed_cords=trimmed_cords.reshape(1,42)
         #print("trimmed",trimmed_cords.shape)
             
         #get the biggest distance value, iow: the bigest abs value
-        #max_value = abs(max(trimmed_cords ,key = abs)) 
         max_value =  np.max(np.abs(trimmed_cords))
-        #print("max value:",max_value)
         
         #normalize all values to the max value
         def _normalize (value):
-        # for i in range(len(trimmed_cords)):
-        #     return trimmed_cords[i]  =  trimmed_cords[i]/max_value
             return value/max_value
         trimmed_cords = list(map(_normalize,trimmed_cords))
-        
        # print("normalized", trimmed_cords[0][24],trimmed_cords[0][25])
-        
         return trimmed_cords
     
     def get_finger_coords(finger, point, coord):

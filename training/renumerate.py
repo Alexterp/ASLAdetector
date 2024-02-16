@@ -4,7 +4,7 @@ from natsort import os_sorted
 IMAGE_FILES = []
 letter = "z"
 
-path = "C:\\Users\\Alex\\Desktop\\Πτυχιακή\\ASLAdetector\\training\\dataset\\"+letter+"\\"
+path = " "
 
 print("file exists?", os.path.exists(path))
 
