@@ -1,25 +1,22 @@
 import sys
-import time
 import mediapipe as mp
 import cv2 as cv
 import numpy as np
 from tensorflow.keras.models import load_model
 import tensorflow as tf
 
-
-
-
 tf.config.run_functions_eagerly(True)
-
 sys.path.append('.\\training\\')
 from hand_class import Hand
-from hand_model import Hand_Model
+
 
 
 class Detector:
     
     def __init__(self) -> None:
-        self._weight_path = '.\\training\\model\\model_1_40.h5'
+
+        self._weight_path = '.\\training\\model\\model_03_10.h5'
+        
         self.model = load_model(self._weight_path)
         
         self.mp_drawing = mp.solutions.drawing_utils
@@ -27,6 +24,8 @@ class Detector:
         self.mp_hands = mp.solutions.hands
         
         self.cap = cv.VideoCapture(1)
+        
+        
         
         self.runner()
         
@@ -55,9 +54,7 @@ class Detector:
                 
                 if results.multi_hand_landmarks:
                     for hand_landmarks in results.multi_hand_landmarks:
-                        
-                        #print(hand_landmarks.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x,hand_landmarks.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y)
-                        
+                                                
                         current_ =  Hand(hand_landmarks)
                         current_data = np.asarray(current_.landmark_data)                        
                         current_data = current_data.reshape(1,42)
@@ -70,11 +67,7 @@ class Detector:
                             buffer = np.append(buffer,current_data, axis=0)
                         
                         elif len(buffer) == 3:
-                            
-                            # print(buffer[1:3])
-                            # print(buffer[1:3].shape)
-                            
-                            self.asla_detect(buffer[-1])
+                            predicted_letter, confq = self.asla_detect(buffer[-1])
                             
                             del buffer
                             buffer = np.empty([1,42])    
@@ -87,7 +80,12 @@ class Detector:
                             self.mp_drawing_styles.get_default_hand_landmarks_style(),
                             self.mp_drawing_styles.get_default_hand_connections_style())
                             
-                cv.imshow('MediaPipe Hands',image)
+                        if 'predicted_letter' in locals():  
+                            cv.putText(image,predicted_letter,(50,50), cv.FONT_HERSHEY_SIMPLEX,1.7,(255,255,255),2,cv.LINE_4)
+                            cv.putText(image,str(confq),(450,50), cv.FONT_HERSHEY_SIMPLEX,0.5,(255,255,255),2,cv.LINE_4)
+                else:
+                    cv.putText(image,'No hand',(50,50), cv.FONT_HERSHEY_SIMPLEX,1.7,(255,255,255),2,cv.LINE_4 )         
+                cv.imshow('ASLA detector',image)
                 if cv.waitKey(5) & 0xFF == 27:
                     break
                 
@@ -108,6 +106,7 @@ class Detector:
         predicted_class_id = temp.index(max_confidence)
         class_name = self.get_class_name(predicted_class_id)
         print(class_name,max_confidence)
+        return class_name, max_confidence
         
         
         

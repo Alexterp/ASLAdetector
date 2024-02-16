@@ -1,5 +1,4 @@
 import cv2
-import csv
 import mediapipe as mp
 from hand_model import Hand_Model
 from hand_class import Hand
@@ -22,7 +21,6 @@ for content in os_sorted(os.listdir(_image_set_path)):     #get image names
   if content.endswith(".jpg"):
     IMAGE_FILES.append(_image_set_path + content)
 
-#natsorted(IMAGE_FILES, alg=ns.IGNORECASE)
 
 print(IMAGE_FILES)
 
@@ -33,8 +31,7 @@ with mp_hands.Hands(
     max_num_hands=2,
     min_detection_confidence=0.5) as hands:
   for idx, file in enumerate(IMAGE_FILES):
-    # Read an image, flip it around y-axis for correct handedness output (see
-    # above).
+    # Read an image, flip it around y-axis for correct handed output 
     image = cv2.flip(cv2.imread(file), 1)
     # Convert the BGR image to RGB before processing.
     results = hands.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
@@ -49,12 +46,6 @@ with mp_hands.Hands(
     
     else: 
       for hand_landmarks in results.multi_hand_landmarks:
-      #   print(
-      #       f'Index finger tip coordinates: (',
-      #       f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].x * image_width}, '
-      #       f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y * image_height}, '
-      #       f'{hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].z })'
-      #   )
         current_ =  Hand(hand_landmarks)
         current_data = np.asarray(current_.landmark_data)
         print("SHAPE:",current_data.shape)
