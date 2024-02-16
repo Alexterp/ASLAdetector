@@ -15,6 +15,7 @@
 
 
 ## **Abstract**
+
 This project aims to train and deploy models for the detection of American Sign Language Alphabet letters based on hand landmarks predicted by MediaPipe.
 
 <img src="[!demo](https://github.com/Alexterp/ASLAdetector/assets/61559126/2590d1e1-f742-4280-9612-d19a5d11ae33)" width="400" height="300">
@@ -24,6 +25,7 @@ Once an image is received from a live camera feed, MediaPipe predicts the coordi
 
 ## **Description of repository**
 This repository is divided into two packages:
+
 
 ### 1. **training** contains: <a id="dor1"></a>
  - all necessary code to create, prepare and deploy the dataset
