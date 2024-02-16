@@ -18,7 +18,7 @@
 
 This project aims to train and deploy models for the detection of American Sign Language Alphabet letters based on hand landmarks predicted by MediaPipe.
 
-<img src="[!demo](https://github.com/Alexterp/ASLAdetector/assets/61559126/2590d1e1-f742-4280-9612-d19a5d11ae33)" width="400" height="300">
+<img src=".\images\demo.gif" width="400" height="300">
 
 Once an image is received from a live camera feed, MediaPipe predicts the coordinates of the key points of the hand, which are then fed into a custom dense neural network model. The model predicts the letter of the alphabet, which is then displayed on the screen.
 
@@ -51,7 +51,7 @@ This project was developed using Python 3.10.9 on Windows platform. Other librar
 ## **Inference** <a id="inf"></a>
 - ### **Pipeline** <a id="pipe"></a>
 
-<img src=".\img\aslaD_pipeline.png" >
+<img src=".\images\aslaD_pipeline.gif" >
 
 - ### **Use** <a id="use"></a>
 To run the inference application cd into project directory and run:
